@@ -1,0 +1,65 @@
+######################################
+#   Data set creation
+#####################################
+
+### Divide Vocabulary into Buckets based on occurrence rates
+1) getVectorStats.pl
+
+   This will get the occurrence stats of the words
+
+2) Decide on what Standard Deviation to use in dividing the data
+
+3) divideVocab.pl
+
+   divides the vocabulary into 6 buckets based on a standard deviation
+
+
+4) combineAllVocab.pl
+
+    combines each of the bucketed vocab files into a single, 'all' vocab file
+
+
+### Make True and False Term Pair Files
+5) makeTrueFalse.pl
+
+   Generates true/false pairs and scores for each bucket
+
+6) assignScoresToTrueFalse.pl
+
+   Assigns scores from vector files to the true false files
+   This creates true false files for each ranking/filtering
+   method, which are then used directly to create ROC curves
+
+
+#### Filter by Occurrence Rates
+If you want to filter by occurrence rates:
+
+1) makeOccurrenceRateVector.pl
+
+   makes vectors of occurrence rates, these can then be used like other
+   vectors when generating ROC curves
+
+
+####################################
+#   Evaluation
+###################################
+
+7) createROC.pl
+
+   Generate ROC curves for each of the buckets
+
+8) sampleROC.pl
+
+   Samples the ROC curve to make it more easily plotted
+   The number of term pairs used in evaluation makes
+   opening and plotting results files difficult, so this
+   reduces the file size. Default sample rate is 1000.
+
+9) grabTopXFromROC.pl
+
+   grabs the top X (default 300) terms from the ROC
+   curve so that performance with the first X terms
+   can be more easily visualized
+
+
+
