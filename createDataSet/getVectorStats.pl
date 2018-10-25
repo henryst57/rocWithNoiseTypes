@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 #User Input
-my $matrixFile = '../../data/matrices/1975_1999_window8_ordered_threshold1';
-my $outFile = '../../data/occurrenceStats/occurrenceStats_1975_1999_TAKE2';
+my $matrixFile = '../../data/matrices/1975_2015_window8_threshold1';
+my $outFile = '../../data/occurrenceStats/occurrenceStats_1975_2015_TAKE2';
 &_getVectorStats($matrixFile, $outFile);
 
 

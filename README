@@ -9,9 +9,12 @@
 
 2) Decide on what Standard Deviation to use in dividing the data
 
+   We use the standard deviation of the number of co-occurring terms for 
+   all terms in the full dataset.
+
 3) divideVocab.pl
 
-   divides the vocabulary into 6 buckets based on a standard deviation
+   divides the vocabulary into 5 buckets based on a standard deviation
 
 
 4) combineAllVocab.pl
