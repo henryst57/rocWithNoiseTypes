@@ -4,7 +4,7 @@ use warnings;
 
 #User Input
 my $matrixFile = '../../data/matrices/1975_1999_window8_ordered_threshold1';
-my $outFile = '../../data/occurrenceStats/occurrenceStats_1975_1999';
+my $outFile = '../../data/occurrenceStats/occurrenceStats_1975_1999_TAKE2';
 &_getVectorStats($matrixFile, $outFile);
 
 
@@ -16,7 +16,7 @@ my $outFile = '../../data/occurrenceStats/occurrenceStats_1975_1999';
 ############################################
 
 #Gets and outputs stats for all terms in the vocabulary
-sub &_getVectorStats {
+sub _getVectorStats {
     my $matrixfile = shift;
     my $outFile = shift;
 
@@ -119,8 +119,6 @@ sub _outputStats {
     print "   nonZero Cooccurring Terms STD = $nonZeroCooccurringTermsSTD\n\n";
     print "   mean nonZero Cooccurrences = $meanNonZeroCooccurrences\n";
     print "   nonZero Cooccurrences STD = $nonZeroCooccurrencesSTD\n";
-
-
 }
 
 
