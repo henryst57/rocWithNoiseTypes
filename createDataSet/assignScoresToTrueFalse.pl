@@ -53,7 +53,6 @@ $vectorFile = $rootDir.'data/vectors/vectors_x2_1975_2015_window8_threshold1_ran
 &_assignScoresForAll($rootDir, $pairsDir, $label, $vectorFile, $semanticType);
 
 
-
 # Run for T047
 $semanticType = 'T047';
 $pairsDir = $rootDir.'data/trueFalse/';
@@ -114,7 +113,6 @@ $vectorFile = $rootDir.'data/vectors/vectors_cooccurrenceCount_1975_1999_window8
 $label = 'cooccurringTermCount';
 $vectorFile = $rootDir.'data/vectors/vectors_cooccurringTermCount_1975_1999_window8_ordered_threshold1_randomCuis_all';
 &_assignScoresForAll($rootDir, $pairsDir, $label, $vectorFile, $semanticType);
-=cut
 
 $label = 'explicitCosine';
 $vectorFile = $rootDir.'data/vectors/vectors_explicitCosine_1975_1999_window8_ordered_threshold1_randomCuis_all';
