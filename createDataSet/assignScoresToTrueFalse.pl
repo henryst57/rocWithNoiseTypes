@@ -254,7 +254,7 @@ $vectorFile = $rootDir.'data/vectors/vectors_x2_1975_2015_window8_threshold1_ran
 #                   Begin Code
 ########################################################
 
-#Assigns scores to all pair files for all bucket numbers
+#Assigns scores to all pair files for all buckets
 # true_1,2,3,4,5,all false 1,2,3,4,5,all
 sub _assignScoresForAll {
     my $rootDir = shift;
@@ -267,22 +267,32 @@ sub _assignScoresForAll {
     my $vectorsRef = &_readVectorFile($vectorFile);
 
     #assign scores for all true samples
-    for (my $bucketNumber = 1; $bucketNumber <= 5; $bucketNumber++) {
-	my $outFile = $rootDir.'data/scoredPairs/true_'.$bucketNumber.'_'.$semanticType.'_'.$label;
-	my $pairsFile = $pairsDir.'true_'.$bucketNumber.'_'.$semanticType;
-	&_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
-    }
+    my $outFile = $rootDir.'data/scoredPairs/true_common_'.$semanticType.'_'.$label;
+    my $pairsFile = $pairsDir.'true_common_'.$semanticType;
+    &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
+    $outFile = $rootDir.'data/scoredPairs/true_mid_'.$semanticType.'_'.$label;
+    $pairsFile = $pairsDir.'true_mid_'.$semanticType;
+    &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
+    $outFile = $rootDir.'data/scoredPairs/true_uncommon_'.$semanticType.'_'.$label;
+    $pairsFile = $pairsDir.'true_uncommon_'.$semanticType;
+    &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
+    
 
     #assign scores for all false samples
-    for (my $bucketNumber = 1; $bucketNumber <= 5; $bucketNumber++) {
-	my $outFile = $rootDir.'data/scoredPairs/false_'.$bucketNumber.'_'.$semanticType.'_'.$label;
-	my $pairsFile = $pairsDir.'false_'.$bucketNumber.'_'.$semanticType;
-	&_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
-    }
+    $outFile = $rootDir.'data/scoredPairs/false_common_'.$semanticType.'_'.$label;
+    $pairsFile = $pairsDir.'false_common_'.$semanticType;
+    &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
+    $outFile = $rootDir.'data/scoredPairs/false_mid_'.$semanticType.'_'.$label;
+    $pairsFile = $pairsDir.'false_mid_'.$semanticType;
+    &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
+    $outFile = $rootDir.'data/scoredPairs/false_uncommon_'.$semanticType.'_'.$label;
+    $pairsFile = $pairsDir.'false_uncommon_'.$semanticType;
+    &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
+    
 
     #assign scores for the all files
-    my $outFile = $rootDir.'data/scoredPairs/true_all_'.$semanticType.'_'.$label;
-    my $pairsFile = $pairsDir.'true_all_'.$semanticType;
+    $outFile = $rootDir.'data/scoredPairs/true_all_'.$semanticType.'_'.$label;
+    $pairsFile = $pairsDir.'true_all_'.$semanticType;
     &_assignScores($vectorfile, $pairsFile, $outFile, $vectorsRef);
     $outFile = $rootDir.'data/scoredPairs/false_all_'.$semanticType.'_'.$label;
     $pairsFile = $pairsDir.'false_all_'.$semanticType;

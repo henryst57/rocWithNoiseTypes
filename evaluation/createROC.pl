@@ -91,7 +91,7 @@ sub _createROCCurveForSemanticType {
     &_createROCDataForNoiseTypes($method, $semanticType, $dataDir, $resultsDir, $sortAscending);
 }
 
-# creates ROC curves for noise types all,1,2,3,4,5
+# creates ROC curves
 sub _createROCDataForNoiseTypes {
     my $method = shift;
     my $semanticType = shift;
@@ -99,21 +99,29 @@ sub _createROCDataForNoiseTypes {
     my $resultsDir = shift;
     my $sortAscending = shift;
 
-    #iterate over each noise type
-    for (my $noiseType = 1; $noiseType <= 5; $noiseType++) {
-        #construct I/O files names
-	my $trueIn = $dataDir.'true_'.$noiseType.'_'.$semanticType.'_'.$method;
-	my $falseIn = $dataDir.'false_'.$noiseType.'_'.$semanticType.'_'.$method;
-	my $rocOut = $resultsDir.'roc_'.$noiseType.'_'.$semanticType.'_'.$method;
-	
-	#create ROC curve for this true/false in
-	&_createROCData($trueIn, $falseIn, $rocOut, $sortAscending);
-    }
+    #Create ROC for each noise type
+    #ROC for common
+    my $trueIn = $dataDir.'true_common_'.$semanticType.'_'.$method;
+    my $falseIn = $dataDir.'false_common_'.$semanticType.'_'.$method;
+    my $rocOut = $resultsDir.'roc_common_'.$semanticType.'_'.$method;
+    &_createROCData($trueIn, $falseIn, $rocOut, $sortAscending);
 
-    #output for all bucket numbers
-    my $trueIn = $dataDir.'true_all_'.$semanticType.'_'.$method;
-    my $falseIn = $dataDir.'false_all_'.$semanticType.'_'.$method;
-    my $rocOut = $resultsDir.'roc_all_'.$semanticType.'_'.$method;
+    #ROC for mid
+    $trueIn = $dataDir.'true_mid_'.$semanticType.'_'.$method;
+    $falseIn = $dataDir.'false_mid_'.$semanticType.'_'.$method;
+    $rocOut = $resultsDir.'roc_mid_'.$semanticType.'_'.$method;
+    &_createROCData($trueIn, $falseIn, $rocOut, $sortAscending);
+    
+    #ROC for uncommon
+    $trueIn = $dataDir.'true_uncommon_'.$semanticType.'_'.$method;
+    $falseIn = $dataDir.'false_uncommon_'.$semanticType.'_'.$method;
+    $rocOut = $resultsDir.'roc_uncommon_'.$semanticType.'_'.$method;
+    &_createROCData($trueIn, $falseIn, $rocOut, $sortAscending);
+
+    #ROC for all
+    $trueIn = $dataDir.'true_all_'.$semanticType.'_'.$method;
+    $falseIn = $dataDir.'false_all_'.$semanticType.'_'.$method;
+    $rocOut = $resultsDir.'roc_all_'.$semanticType.'_'.$method;
     &_createROCData($trueIn, $falseIn, $rocOut, $sortAscending);
 }
 
@@ -227,6 +235,9 @@ sub _createROCData {
     my @fpf = ();
     my $numPositive = scalar @trueScores;
     my $numNegative = scalar @falseScores;
+    #also calculate auroc as the sum of rectangles under the
+    # curve, that is sum of lenght*width at each datapoint
+    my $auroc = 0;
     for (my $i = 0; $i < scalar @scores; $i++) {
 	#increment true/false positive rates
 	if ($classes[$i] == 0) {
@@ -239,10 +250,18 @@ sub _createROCData {
 	#calculate true/false positive fraction at this index
         $tpf[$i] = $tpr/$numPositive;
 	$fpf[$i] = $fpr/$numNegative;
+	
+	#auroc += length*height
+	# length is the x-axis width, the previouss fpf to current fpf
+	# height is the y-axis height = tpf
+	if ($i > 0) { #no width for first datapoint
+	    $auroc += ($fpf[$i]-$fpf[$i-1])*$tpf[$i]
+	}
     }
 
     #output the true/false positive rate in tab seperated columns
     open OUT, ">$rocOut" or die ("ERROR: unable to open rocOut: $rocOut\n");
+    print OUT "$rocOut\tAUROC:\t$auroc\n";
     print OUT "False Positive Fraction\tTrue Positive Fraction\n";
     for (my $i = 0; $i < scalar @scores; $i++) {
 	print OUT "$fpf[$i]\t$tpf[$i]\n";

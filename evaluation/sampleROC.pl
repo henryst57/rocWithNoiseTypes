@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 #user input
-my $resultsDir = '../../results/';
+my $resultsDir = '../../results_test/';
 my $reduction = 10000;
 &_sampleAllResults($resultsDir, $reduction);
 
@@ -26,8 +26,11 @@ sub _sampleAllResults {
 
     #sample each of the files from the directory
     foreach my $file (@files) {
-	my $outFile = $resultsDir.$file.'_reduced';
-	&_sampleFile($resultsDir.$file, $outFile, $reduction);
+	#skip the . and .. files
+	if ($file ne '.' && $file ne '..') {
+       	    my $outFile = $resultsDir.$file.'_reduced';
+	    &_sampleFile($resultsDir.$file, $outFile, $reduction);
+	}
     }
 
     print "Done!\n";
@@ -41,12 +44,18 @@ sub _sampleFile {
     my $outFile = shift;
     my $reduction = shift;
 
+    print "INFILE = $inFile\n";
+
     #open in and out files
     open IN, $inFile or die ("ERROR: unable to open inFile: $inFile\n");
     open OUT, ">$outFile" or die("ERROR: unable to open outFile: $outFile\n");
     
-    #skip the header line
+    #print the header lines
     my $line = <IN>;
+    print $line;
+    print OUT $line;
+    $line = <IN>;
+    print OUT $line;
     
     #copy lines to OUT at intervals of reduction
     my $count = $reduction;

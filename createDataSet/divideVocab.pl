@@ -1,11 +1,9 @@
 # Divide the vocabulary into buckets based on the number of terms 
-# they co-occur with (based on 1, 2, 3, 4, 5, >5 STD)
-#
-# 
+# they co-occur with (based on standard deviations from 0)
+# Buckets are common terms, mid terms, and uncommon terms
 #
 use strict;
 use warnings;
-
 
 #user input
 my $countsFile = '../../data/occurrenceStats/occurrenceStats_all_wholeVocab';
@@ -41,26 +39,19 @@ sub _outputByGroup {
     my $std = shift;
 
     #manually define the buckets based on STDs
-    #low is 0-1 STD (bucket1)
+    #(common) low is 0-1 STD (bucket1)
     my $lowStart = 0;
     my $lowEnd = $std;
     #mid is 1-3 std (bucket2)
     my $midStart = $std;
     my $midEnd = $midStart+(2*$std);
-    #high is 3-4 std (bucket3)
-    my $highStart = $midEnd;
-    my $highEnd = $midEnd+$std;
-    #very high is 4-5 std (bucket4)
-    my $veryHighStart = $highEnd;
-    my $veryHighEnd = $veryHighStart+(2*$std); 
-    #anythis above gets output as bucket5
+    #(uncommon) high is anything > $midEnd (bucket2)
+    
 
     #open each of the bucket output files
-    open OUT1, ">$outputBase".'1' or die ("ERROR: unable to open bucket 1 output\n");
-    open OUT2, ">$outputBase".'2' or die ("ERROR: unable to open bucket 2 output\n");
-    open OUT3, ">$outputBase".'3' or die ("ERROR: unable to open bucket 3 output\n");
-    open OUT4, ">$outputBase".'4' or die ("ERROR: unable to open bucket 4 output\n");
-    open OUT5, ">$outputBase".'5' or die ("ERROR: unable to open bucket 5 output\n");
+    open OUT1, ">$outputBase".'_common' or die ("ERROR: unable to open common output\n");
+    open OUT2, ">$outputBase".'_mid' or die ("ERROR: unable to open mid output\n");
+    open OUT3, ">$outputBase".'_uncommon' or die ("ERROR: unable to open uncommon output\n");
     
     #bucket and output
     foreach my $cui (keys %{$countsRef}) {
@@ -73,14 +64,8 @@ sub _outputByGroup {
 	elsif ($count > $midStart && $count <= $midEnd) {
 	    print OUT2 "$cui\n";
 	}
-	elsif ($count > $highStart && $count <= $highEnd) {
+	else  {
 	    print OUT3 "$cui\n";
-	}
-	elsif ($count > $veryHighStart && $count <= $veryHighEnd) {
-	    print OUT4 "$cui\n";
-	}
-	else {
-	    print OUT5 "$cui\n";
 	}
     }
     
@@ -88,8 +73,6 @@ sub _outputByGroup {
     close OUT1;
     close OUT2;
     close OUT3;
-    close OUT4;
-    close OUT5;
 }
 
 

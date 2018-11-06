@@ -95,41 +95,29 @@ sub _generateTrueFalse {
     # all false pairs for the start cuis, now we will output 
     # them by bucket (all, 1, 2, 3, 4, 5)
     my $bucketNumber = 'all';
-    my $bucketFile = $bucketDir.'vocab_bucket'.$bucketNumber;
+    my $bucketFile = $bucketDir.'vocab_bucket_'.$bucketNumber;
     my $trueOut = $outputDir.'true_'.$bucketNumber.'_'.$semanticType;
     my $falseOut = $outputDir.'false_'.$bucketNumber.'_'.$semanticType;
     &_outputBucketPairs(\%truePairs, \%falsePairs, $bucketFile, $trueOut, $falseOut);
     
-    $bucketNumber = '1';
-    $bucketFile = $bucketDir.'vocab_bucket'.$bucketNumber;
+    $bucketNumber = 'common';
+    $bucketFile = $bucketDir.'vocab_bucket_'.$bucketNumber;
     $trueOut = $outputDir.'true_'.$bucketNumber.'_'.$semanticType;
     $falseOut = $outputDir.'false_'.$bucketNumber.'_'.$semanticType;
     &_outputBucketPairs(\%truePairs, \%falsePairs, $bucketFile, $trueOut, $falseOut);
     
-    $bucketNumber = '2';
-    $bucketFile = $bucketDir.'vocab_bucket'.$bucketNumber;
+    $bucketNumber = 'mid';
+    $bucketFile = $bucketDir.'vocab_bucket_'.$bucketNumber;
     $trueOut = $outputDir.'true_'.$bucketNumber.'_'.$semanticType;
     $falseOut = $outputDir.'false_'.$bucketNumber.'_'.$semanticType;
     &_outputBucketPairs(\%truePairs, \%falsePairs, $bucketFile, $trueOut, $falseOut);
     
-    $bucketNumber = '3';
-    $bucketFile = $bucketDir.'vocab_bucket'.$bucketNumber;
+    $bucketNumber = 'uncommon';
+    $bucketFile = $bucketDir.'vocab_bucket_'.$bucketNumber;
     $trueOut = $outputDir.'true_'.$bucketNumber.'_'.$semanticType;
     $falseOut = $outputDir.'false_'.$bucketNumber.'_'.$semanticType;
     &_outputBucketPairs(\%truePairs, \%falsePairs, $bucketFile, $trueOut, $falseOut);
     
-    $bucketNumber = '4';
-    $bucketFile = $bucketDir.'vocab_bucket'.$bucketNumber;
-    $trueOut = $outputDir.'true_'.$bucketNumber.'_'.$semanticType;
-    $falseOut = $outputDir.'false_'.$bucketNumber.'_'.$semanticType;
-    &_outputBucketPairs(\%truePairs, \%falsePairs, $bucketFile, $trueOut, $falseOut);
-    
-    $bucketNumber = '5';
-    $bucketFile = $bucketDir.'vocab_bucket'.$bucketNumber;
-    $trueOut = $outputDir.'true_'.$bucketNumber.'_'.$semanticType;
-    $falseOut = $outputDir.'false_'.$bucketNumber.'_'.$semanticType;
-    &_outputBucketPairs(\%truePairs, \%falsePairs, $bucketFile, $trueOut, $falseOut);
-
     print "Done!\n";
 }
 
