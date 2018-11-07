@@ -14,7 +14,7 @@
 
 3) divideVocab.pl
 
-   divides the vocabulary into 5 buckets based on a standard deviation
+   divides the vocabulary into 3 buckets based on a standard deviation of the count of co-occurring terms
 
 
 4) combineAllVocab.pl
