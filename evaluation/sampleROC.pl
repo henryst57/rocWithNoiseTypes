@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 #user input
-my $resultsDir = '../../results_test/';
+my $resultsDir = '../../results/';
 my $reduction = 10000;
 &_sampleAllResults($resultsDir, $reduction);
 
@@ -44,15 +44,12 @@ sub _sampleFile {
     my $outFile = shift;
     my $reduction = shift;
 
-    print "INFILE = $inFile\n";
-
     #open in and out files
     open IN, $inFile or die ("ERROR: unable to open inFile: $inFile\n");
     open OUT, ">$outFile" or die("ERROR: unable to open outFile: $outFile\n");
     
     #print the header lines
     my $line = <IN>;
-    print $line;
     print OUT $line;
     $line = <IN>;
     print OUT $line;
