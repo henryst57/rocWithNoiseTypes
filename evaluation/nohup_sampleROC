@@ -1,8 +1,0 @@
-nohup: ignoring input
-Use of uninitialized value $line in print at sampleROC.pl line 53.
-Use of uninitialized value $line in print at sampleROC.pl line 55.
-Use of uninitialized value $line in print at sampleROC.pl line 53.
-Use of uninitialized value $line in print at sampleROC.pl line 55.
-Use of uninitialized value $line in print at sampleROC.pl line 53.
-Use of uninitialized value $line in print at sampleROC.pl line 55.
-Done!

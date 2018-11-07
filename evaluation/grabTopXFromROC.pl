@@ -27,12 +27,16 @@ sub _grabTopXFromAllFiles {
     my @files = readdir $dir;
     closedir $dir;
 
-    #sample each of the files from the directory
+    #grab from each of the files from the directory
     foreach my $file (@files) {
-        my $outFile = $resultsDir.$file.'_top'.$X;
-        &_grabTopX($resultsDir.$file, $outFile, $X);
-    }
+	$file = $resultsDir.$file;
 
+	#only grab from files (skip directories)
+	if ((-f $file)) {
+	    my $outFile = $file.'_top'.$X;
+	    &_grabTopX($file, $outFile, $X);
+	}
+    }
     print "Done!\n";
 }
 

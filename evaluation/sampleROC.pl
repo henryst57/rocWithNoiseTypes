@@ -26,13 +26,14 @@ sub _sampleAllResults {
 
     #sample each of the files from the directory
     foreach my $file (@files) {
-	#skip the . and .. files
-	if ($file ne '.' && $file ne '..' && !(-d $file)) {
-       	    my $outFile = $resultsDir.$file.'_reduced';
-	    &_sampleFile($resultsDir.$file, $outFile, $reduction);
-	}
-    }
+	$file =$resultsDir.$file;
 
+	#only grab from files (skip directories)                                
+        if ((-f $file)) {
+            my $outFile = $file.'_reduced';
+	    &_sampleFile($file, $outFile, $reduction);
+        }
+    }
     print "Done!\n";
 }
 
