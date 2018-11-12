@@ -57,13 +57,21 @@ sub _sampleFile {
     
     #copy lines to OUT at intervals of reduction
     my $count = $reduction;
+    my $lastLine = '';
     while (my $line = <IN>) {
 	if ($count == $reduction) {
 	    print OUT $line;
 	    $count = 0;
 	}
 	$count++;
+	$lastLine = $line;
     }
+
+    #ensure the last line is always grabbed
+    # this ensures the 100% false positive rate is grabbed
+    print OUT $lastLine;
+
+    #close I/O
     close IN;
     close OUT;
 }
